@@ -21,13 +21,17 @@ module Enumerable
         end
       end
 
-  def my_select
-    result = []
-    self.my_each {|e| 
-      result << e if yield(e)
-    }
-    result
-  end
+      def my_select
+        if block_given?
+          result = []
+          self.my_each {|e| 
+            result << e if yield(e)
+          }
+          result
+        else
+          to_enum(:my_select)
+        end
+      end
 
   def my_all?
 
