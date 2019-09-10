@@ -33,9 +33,10 @@ module Enumerable
         end
       end
 
-  def my_all?
-
-  end
+      def my_all?
+        my_each { |v| return false unless yield v }
+        true
+      end
 
   def my_any?
   
