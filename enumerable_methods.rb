@@ -60,11 +60,17 @@ module Enumerable
         true
       end
 
+      def my_count(arg = nil)
+        if block_given? && arg.nil?
+          return my_select {|e| yield e}.size
+        elsif arg && !block_given?
+          return my_select {|e| e == arg}.size
+        end
+        self.size
+      end
+
   # methods below this line are not ready yet 
     
-  def my_count
-  end
-
   def my_map
   end
 
