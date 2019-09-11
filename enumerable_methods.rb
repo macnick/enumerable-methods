@@ -34,13 +34,19 @@ module Enumerable
       end
 
       def my_all?
-        my_each { |v| return false unless yield v }
+        if block_given?
+          my_each { |e| return false unless yield e }
+        else
+          return my_all? {|e| e }
+        end
         true
       end
-
-  def my_any?
-  
-  end
+  # methods below this line are not ready yet 
+    
+    def my_any?
+      my_each { |v| return true if yield v }
+      false
+    end
 
   def my_none?
   end
