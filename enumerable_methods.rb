@@ -69,6 +69,18 @@ module Enumerable
         self.size
       end
 
+      def my_map
+        if block_given?
+          result = []
+            self.my_each {|e| 
+              result << yield(e)
+            }
+          result
+        else
+            to_enum(:my_map)
+        end
+      end
+      
   # methods below this line are not ready yet 
     
   def my_map
