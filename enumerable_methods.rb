@@ -50,12 +50,18 @@ module Enumerable
         end
         false
       end
+
+      def my_none?
+        if block_given?
+          !my_all? { |e| return false if yield e }
+        else
+          return !my_any? {|e| e }
+        end
+        true
+      end
+
   # methods below this line are not ready yet 
     
-
-  def my_none?
-  end
-
   def my_count
   end
 
