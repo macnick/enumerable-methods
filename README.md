@@ -1,6 +1,6 @@
 # Enumerable-Methods
 
-## 1st solo project for Microverse's Ruby course
+### 1st solo project for Microverse's Ruby course
 
 __A simple implementation of my own versions of the following Ruby methods:__
   - #each
@@ -18,7 +18,7 @@ __A simple implementation of my own versions of the following Ruby methods:__
   
   ## Specifications
   
-  All accept a block but also work the same as the original methods when a block is not provided.
+  All methods accept a block but also work the same as the original methods when a block is not provided.
   Specifically #my_map accepts a block or a proc.
   #my_inject is implemented to work exactly as the original with checks and it accepts blocks, procs and symbols. 
   
