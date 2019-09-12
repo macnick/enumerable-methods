@@ -69,30 +69,55 @@ module Enumerable
         self.size
       end
 
-      def my_map
+      def my_map(proc = nil)
+        result = []
         if block_given?
-          result = []
-            self.my_each {|e| 
+            my_each {|e| 
               result << yield(e)
             }
+          result
+        elsif proc
+          my_each {|e| 
+           result << proc.call(e)
+          }
           result
         else
             to_enum(:my_map)
         end
       end
 
-  # methods below this line are not ready yet 
+      def my_inject(sv = nil, sym = nil, &block)
+        # with checks it can handle everything
+        sv = sv.to_sym if sv.is_a?(String) && !sym && !block
+        block, sv = sv.to_proc, nil if sv.is_a?(Symbol) && !sym
+        sym = sym.to_sym if sym.is_a?(String)
+        block = sym.to_proc if sym.is_a?(Symbol)
     
-  def my_inject
-    
-  end
-
-  def multiply_els
-  end
+        # Ready to rock & roll
+        each { |x| sv = sv.nil? ? x : block.yield(sv, x) }
+        sv
+      end
 
 end
 
+def multiply_els(arr)
+  arr.my_inject(:*)
+end
+
 # TESTS
+
+# p multiply_els([2,4,5])
+
+# p [1,2,3,4,5].reduce(2,&:+) 
+# p [1,2,3,4,5].my_inject(2,&:+) 
+# p [1,2,3,4,5].my_inject(:*)  
+# p [1,2,3,4,5].my_inject(2, &:*)   
+# p %w(3 4 5).my_inject(&:+)  
+# p %w(3 4 5).my_inject("hello", &:+) 
+
+# p [1,2,3,4,5].my_inject { |sum, n| sum * n }
+# p [1,2,3,4,5].inject { |sum, n| sum * n }
+
 # p [10, 18, 4, 6, 4, 16, 5].map {|e| e * 2}
 # p [10, 18, 4, 6, 4, 16, 5].my_map {|e| e * 2}
 # p [10, 18, 4, 6, 4, 16, 5].map
