@@ -106,6 +106,11 @@ end
 
 # TESTS
 
+# my_proc = proc { |x| x**2 }
+
+# p [10, 18, 4, 6, 4, 16, 5].my_map(&my_proc)
+# p [10, 18, 4, 6, 4, 16, 5].map(&my_proc)
+
 # p multiply_els([2,4,5])
 
 # p [1,2,3,4,5].reduce(2,&:+) 
