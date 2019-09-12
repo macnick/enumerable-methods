@@ -51,13 +51,12 @@ module Enumerable
         false
       end
 
-      def my_none?
+      def my_none?(*pattern)
         if block_given?
-          !my_all? { |e| return false if yield e }
+          return !my_any? { |e| yield e }
         else
-          return !my_any? {|e| e }
+          return !my_any?(*pattern)
         end
-        true
       end
 
       def my_count(arg = nil)
