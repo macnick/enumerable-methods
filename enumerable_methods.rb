@@ -20,7 +20,7 @@ module Enumerable
     else
       to_enum(:my_each_with_index)
     end
-    end
+  end
 
   def my_select
     if block_given?
@@ -61,11 +61,8 @@ module Enumerable
   end
 
   def my_count(arg = nil)
-    if block_given? && arg.nil?
-      return my_select { |e| yield e }.size
-    elsif arg && !block_given?
-      return my_select { |e| e == arg }.size
-    end
+    return my_select { |e| yield e }.size if block_given? && arg.nil?
+    return my_select { |e| e == arg }.size if arg && !block_given?
 
     size
   end
@@ -87,19 +84,19 @@ module Enumerable
     end
   end
 
-  def my_inject(sv = nil, sym = nil, &block)
+  def my_inject(stv = nil, sym = nil, &block)
     # with checks it can handle everything
-    sv = sv.to_sym if sv.is_a?(String) && !sym && !block
-    if sv.is_a?(Symbol) && !sym
-      block = sv.to_proc
-      sv = nil
-        end
+    stv = stv.to_sym if stv.is_a?(String) && !sym && !block
+    if stv.is_a?(Symbol) && !sym
+      block = stv.to_proc
+      stv = nil
+    end
     sym = sym.to_sym if sym.is_a?(String)
     block = sym.to_proc if sym.is_a?(Symbol)
 
     # Ready to rock & roll
-    each { |x| sv = sv.nil? ? x : block.yield(sv, x) }
-    sv
+    each { |x| stv = stv.nil? ? x : block.yield(stv, x) }
+    stv
   end
 end
 
