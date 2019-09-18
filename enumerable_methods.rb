@@ -12,15 +12,25 @@ module Enumerable
   end
 
   def my_each_with_index
-    if block_given?
-      my_each do |_e, i = 0|
-        yield(self[i], i)
-        i += 1
-      end
-    else
-      to_enum(:my_each_with_index)
+    i = 0
+    arr = []
+    while i < size
+      arr << yield(self[i], i)
+      i += 1
     end
+    arr
   end
+
+  # def my_each_with_index
+  #   if block_given?
+  #     my_each do |_e, i = 0|
+  #       yield(self[i], i)
+  #       i += 1
+  #     end
+  #   else
+  #     to_enum(:my_each_with_index)
+  #   end
+  # end
 
   def my_select
     if block_given?
