@@ -14,7 +14,7 @@ module Enumerable
   def my_each_with_index
     if block_given?
       my_each do |_e, i = 0|
-        yield self[i], i
+        yield(self[i], i)
         i += 1
       end
     else
@@ -35,21 +35,16 @@ module Enumerable
   end
 
   def my_all?
-    if block_given?
-      my_each { |e| return false unless yield e }
-    else
-      return my_all? { |e| e }
-    end
+    return my_all? { |e| e } unless block_given?
+
+    my_each { |e| return false unless yield e }
     true
   end
 
   def my_any?
-    if block_given?
-      my_each { |e| return true if yield e }
-    else
-      return my_any? { |e| e }
-    end
-    false
+    return my_any? { |e| e } unless block_given?
+
+    my_each { |e| return true if yield e }
   end
 
   def my_none?(*pattern)
@@ -151,8 +146,8 @@ end
 # p [nil, nil].any?
 # p [nil, nil].my_any?
 
-# p [10, 18, 4, 6, 14, 16, 5, 8].all? { |e| e >= 0 }
-# p [10, 18, 4, 6, 14, 16, 5, 8].my_all? { |e| e >= 0 }
-# p "without block"
+# p [10, 18, 4, 6, 14, 16, 5, 8].all? { |e| e <= 0 }
+# p [10, 18, 4, 6, 14, 16, 5, 8].my_all? { |e| e <= 0 }
+# p 'without block'
 # p [10, 18, 4, 6, 14, 16, nil, 8].all?
 # p [10, 18, 4, 6, 14, 16, nil, 8].my_all?
