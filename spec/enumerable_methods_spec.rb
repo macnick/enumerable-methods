@@ -44,4 +44,14 @@ RSpec.describe Enumerable do
       end
     end
   end
+  describe '#my_all?' do
+    context 'When we pass array' do
+    it ' returns true if the block never returns false or nil' do
+      expect(str_to_array.my_all? { |word| word.length >= 3 } ).to be_truthy
+    end
+    it ' returns false if the block returns false or nil' do
+      expect(str_to_array.my_all? { |word| word.length >= 4 } ).to be_falsey
+    end
+   end
+  end
 end
