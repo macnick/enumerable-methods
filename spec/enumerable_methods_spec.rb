@@ -46,12 +46,39 @@ RSpec.describe Enumerable do
   end
   describe '#my_all?' do
     context 'When we pass array' do
-    it ' returns true if the block never returns false or nil' do
-      expect(str_to_array.my_all? { |word| word.length >= 3 } ).to be_truthy
+      it 'returns true if the block never returns false or nil' do
+        expect(str_to_array.my_all? { |word| word.length >= 3 }).to be_truthy
+      end
+      it 'returns false if the block returns false or nil' do
+        expect(str_to_array.my_all? { |word| word.length >= 4 }).to be_falsey
+      end
     end
-    it ' returns false if the block returns false or nil' do
-      expect(str_to_array.my_all? { |word| word.length >= 4 } ).to be_falsey
+  end
+  describe '#my_any?' do
+    context 'When we pass array' do
+    it 'returns true if the block ever returns a value other than false or nil.' do
+      expect(str_to_array.my_any? { |word| word.length >= 3 }).to be_truthy
+    end
+    it 'returns false if the block returns false or nil' do
+      expect(str_to_array.my_any? { |word| word.length >= 4 }).to be_truthy
+    end
+    it 'if the block is not given, Ruby adds an implicit block of { |obj| obj } that will return true if at least one of the collection members is not false or nil.' do
+      expect(str_to_array.my_any?).to be_truthy
     end
    end
+  end
+
+  describe '#my_none?' do
+    context 'When we pass an array' do
+      it 'the method returns true if the block never returns true for all elements' do
+        expect(str_to_array.my_none? { |word| word.length == 7 }).to be_truthy
+      end
+      it 'the method returns false if the block returns false for at least one element' do
+        expect(str_to_array.my_none? { |word| word.length == 6 }).to be_falsey
+      end
+      it 'if block is not given, will return true only if none of the collection members is true.' do
+        expect(str_to_array.my_none?).to be_falsey
+      end
+    end
   end
 end
