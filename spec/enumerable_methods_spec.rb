@@ -34,4 +34,14 @@ RSpec.describe Enumerable do
       end
     end
   end
+  describe '#my_select' do
+    context 'When we pass array' do
+      it 'returns an array containing all elements of enum for which the given block returns a true value.' do
+      expect(array.my_select { |num| num.even? }).to eql([2, 4])
+      end
+      it 'If no block is given, an Enumerator is returned instead.' do
+        expect(array.my_select).to be_a(Enumerator)
+      end
+    end
+  end
 end
