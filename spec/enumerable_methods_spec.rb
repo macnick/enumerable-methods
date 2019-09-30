@@ -63,7 +63,7 @@ RSpec.describe Enumerable do
       it 'returns false if the block returns false or nil' do
         expect(str_to_array.my_any? { |word| word.length >= 4 }).to be_truthy
       end
-      it 'if the block is not given, Ruby adds an implicit block of { |obj| obj } that will return true if at least one of the collection members is not false or nil.' do
+      it 'if no block given it returns true if one of the collection members is not false/nil.' do
         expect(str_to_array.my_any?).to be_truthy
       end
     end
@@ -93,6 +93,16 @@ RSpec.describe Enumerable do
       end
       it 'If a block is given, it counts the number of elements yielding a true value.' do
         expect(array.my_count(&:even?)).to eql(2)
+      end
+    end
+  end
+  describe '#my_map' do
+    context 'When we pass a running bock' do
+      it 'Returns a new array with the results of running block once for every element in enum.' do
+      expect(array.my_map { |i| i*i } ).to eq([1, 4, 9, 16])
+      end
+      it 'If no block is given, an enumerator is returned instead.' do
+      expect(array.my_map).to be_a(Enumerator)
       end
     end
   end
