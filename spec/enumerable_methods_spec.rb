@@ -96,13 +96,33 @@ RSpec.describe Enumerable do
       end
     end
   end
+
   describe '#my_map' do
     context 'When we pass a running bock' do
       it 'Returns a new array with the results of running block once for every element in enum.' do
-      expect(array.my_map { |i| i*i } ).to eq([1, 4, 9, 16])
+        expect(array.my_map { |i| i * i }).to eq([1, 4, 9, 16])
       end
-      it 'If no block is given, an enumerator is returned instead.' do
-      expect(array.my_map).to be_a(Enumerator)
+      it 'if no block is given, an enumerator is returned instead.' do
+        expect(array.my_map).to be_a(Enumerator)
+      end
+    end
+  end
+
+  describe '#my_inject' do
+    context 'If you pass a block, then for each el in enum the block is passed an accumulator value and the el' do
+      it 'it returns all elements combined by the specified operation' do
+        expect(array.my_inject(5, :+)).to eql(15)
+      end
+      it 'it returns all elements combined by the specified operation' do
+        expect(array.my_inject(5) { |product, n| product * n }).to eql(120)
+      end
+    end
+    context 'f you do not explicitly specify an initial value for memo,' do
+      it ' the first element of collection is used as the initial value of memo' do
+        expect(array.my_inject { |product, n| product * n }).to eql(24)
+      end
+      it 'it returns all elements combined by the specified operation' do
+        expect(array.my_inject(:+)).to eql(10)
       end
     end
   end
